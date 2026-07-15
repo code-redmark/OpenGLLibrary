@@ -1,19 +1,38 @@
 #include "EASUI/EASUI.h"
-#include "EASUI/DEPENDENCIES/COMMON/STRINGS.h"
+#include <stdio.h>
 
 
 
 int main()
 {
 
-        EASUI_LABEL LABEL_1;
-
-        SET_NEW_EASUI_LABEL(&LABEL_1, 0, 0, 10, 2, 12, 1024);
-
-        STRING_APPEND(LABEL_1.TEXT, "HELLO WORLD");
+        EASUI_WINDOW TEST_WINDOW;
+        EASUI_LABEL TEST_LABEL;
 
 
-        LABEL_1.TEST_FUNCTION(&LABEL_1);
+        EASUI_INIT();
+
+
+        // [RUN PART]
+        {
+
+                SET_NEW_EASUI_WINDOW(&TEST_WINDOW, 16, 300, 200);
+
+
+                printf("ADDRESS OF WINDOW ELEMENT_LIST = %p\n", TEST_WINDOW.ELEMENT_LIST);
+
+
+                SET_NEW_EASUI_LABEL(&TEST_LABEL, &TEST_WINDOW, 0, 0, 20, 10, 12, 1024);
+
+
+                printf("ADDRESS OF TEST_LABEL = %p\n", &TEST_LABEL);
+                printf("ADDRESS OF WINDOW ELEMENT_LIST[0] (SHOULD BE TEST_LABEL) = %p\n", TEST_WINDOW.ELEMENT_LIST[0]);
+
+        }
+
+
+        EASUI_END();
+
 
 
         return 0;

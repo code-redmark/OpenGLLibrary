@@ -1,8 +1,12 @@
 #define EASUI
 #ifdef EASUI
 
+
+
+#include "MEMORY_ARENA/MEMORY_ARENA.h"
 #include <stdio.h>
 #include <stdlib.h>
+
 
 
 #define EASUI_ERROR 0
@@ -20,6 +24,13 @@ enum TYPE_NUMBER
 };
 
 
+void EASUI_INIT();
+void EASUI_END();
+
+
+int ADD__ELEMENT__TO__FRAMED_ELEMENT(void* FRAMED_ELEMENT, void* ELEMENT);
+
+
 // ================================================== [WINDOW] =================================================
 
         typedef struct EASUI_WINDOW EASUI_WINDOW;
@@ -32,8 +43,12 @@ enum TYPE_NUMBER
                 unsigned short MAX_ELEMENT_COUNT;
                 void** ELEMENT_LIST;
                 unsigned int WIDTH, HEIGHT;
+                int (*ADD_ELEMENT)(EASUI_WINDOW* WINDOW, void* ELEMENT);
 
         };
+
+
+        int SET_NEW_EASUI_WINDOW(EASUI_WINDOW* WINDOW, const unsigned short MAX_ELEMENT_COUNT, const unsigned int WIDTH, const unsigned int HEIGHT);
 
 // =============================================================================================================
 
@@ -41,6 +56,7 @@ enum TYPE_NUMBER
 // =================================================== [LABEL] =================================================
 
         typedef struct EASUI_LABEL EASUI_LABEL;
+
 
         struct EASUI_LABEL
         {
@@ -53,7 +69,8 @@ enum TYPE_NUMBER
 
         };
 
-        int SET_NEW_EASUI_LABEL(EASUI_LABEL* LABEL, const unsigned int X_POSITION, const unsigned int Y_POSITION, const unsigned int WIDTH, const unsigned int HEIGHT, const unsigned int FONT_SIZE, const unsigned long MAX_STRING_SIZE);
+
+        int SET_NEW_EASUI_LABEL(EASUI_LABEL* LABEL, void* FRAMED_HOLDER, const unsigned int X_POSITION, const unsigned int Y_POSITION, const unsigned int WIDTH, const unsigned int HEIGHT, const unsigned int FONT_SIZE, const unsigned long MAX_STRING_SIZE);
 
 // ===============================================================================================================
 
