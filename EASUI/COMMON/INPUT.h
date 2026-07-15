@@ -1,12 +1,22 @@
 #ifndef INPUT
 #define INPUT
 
+
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <termios.h>
-#include <unistd.h>
 #include <fcntl.h>
-#include <sys/select.h>
+
+
+#ifdef _WIN32
+    #include <io.h>
+    #include <conio.h>
+    #include <windows.h>
+#else
+    #include <termios.h>
+    #include <unistd.h>
+    #include <sys/select.h>
+#endif
 
 
 
