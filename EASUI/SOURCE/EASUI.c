@@ -36,6 +36,9 @@ int EASUI_INIT(const unsigned short MAX_WINDOW_COUNT)
         SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
 
+        int EASUI__WINDOW_MANAGER_START();
+
+
         return EASUI_OK;
 
 }

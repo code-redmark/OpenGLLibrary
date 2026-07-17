@@ -153,6 +153,9 @@ int START(EASUI_WINDOW* WINDOW)
 
                 SDL_GL_SetSwapInterval(1);
 
+
+                WINDOW->STATUS = EASUI_WINDOW_RUNNNING;
+
         }
 
 
