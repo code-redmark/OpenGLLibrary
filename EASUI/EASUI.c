@@ -1,50 +1,42 @@
 #include "EASUI.h"
 
-
-
 #define DEFAULT_PROGRAM_ARENA_SIZE 1024
-
-
 
 void EASUI_INIT()
 {
-
         INIT_MEMORY_AREMA(DEFAULT_PROGRAM_ARENA_SIZE);
-
 }
-
 
 void EASUI_END()
 {
-
-        FREE_MEMORY_ARENA();
-
+    FREE_MEMORY_ARENA();
 }
 
+// ============= CONTAINER DEFINITIONS
 
-int ADD__ELEMENT__TO__FRAMED_ELEMENT(void* FRAMED_ELEMENT, void* ELEMENT)
+int CONTAINER_LAST_ELEMENT_INDEX(EASUI_CONTAINER* CONTAINER)
+{
+    uint16_t index = 0;
+    for (; CONTAINER->CHILDREN_LIST[index] != NULL; index++);
+
+    return index - 1;
+}
+
+int CONTAINER_ADD_ELEMENT(EASUI_CONTAINER* CONTAINER, EASUI_ELEMENT* ELEMENT)
 {
 
-        char FRAMED_TYPE = *(char*)FRAMED_ELEMENT;
+    uint16_t SIZE = CONTAINER_LAST_ELEMENT_INDEX(CONTAINER) + 1;
 
 
-        if (FRAMED_TYPE == EASUI_WINDOW_NUMBER)
-        {
+    if (SIZE + 1 >= CONTAINER->MAX_ELEMENT_COUNT)
+    {
+        perror("Exceeding max element count for Screen");
+        return EASUI_ERROR;
+    }
 
-                #define FRAMED_PTR ((EASUI_WINDOW*)FRAMED_ELEMENT)
+    CONTAINER->CHILDREN_LIST[SIZE] = ELEMENT;
+    CONTAINER->CHILDREN_LIST[SIZE + 1] = NULL;
 
-
-                FRAMED_PTR->ADD_ELEMENT(FRAMED_PTR, ELEMENT);
-
-        }
-        else
-        {
-
-                return EASUI_ERROR;
-
-        }
-
-
-        return EASUI_OK;
+    return EASUI_OK;
 
 }

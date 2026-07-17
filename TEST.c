@@ -6,40 +6,43 @@
 int main()
 {
 
-        EASUI_WINDOW TEST_WINDOW;
-        EASUI_LABEL TEST_LABEL;
-        EASUI_LABEL TEST_LABEL_2;
+    EASUI_WINDOW testWindow;
+    SET_NEW_EASUI_WINDOW(&testWindow, 67, (EASUIvec2){ .x = 640, .y = 480 });
+
+    EASUI_LABEL testLabel1;
+    SET_NEW_EASUI_LABEL(&testLabel1, (EASUI_CONTAINER*)(&testWindow), (EASUIvec2) { .x = 0, .y = 0 }, (EASUIvec2) { .x = 200, .y = 100 }, 16);
+
+    EASUI_LABEL testLabel2;
+    SET_NEW_EASUI_LABEL(&testLabel2, (EASUI_CONTAINER*)(&testWindow), (EASUIvec2) { .x = 0, .y = 0 }, (EASUIvec2) { .x = 200, .y = 100 }, 16);
+
+    EASUI_WINDOW testWindow2;
+    SET_NEW_EASUI_WINDOW(&testWindow2, 67, (EASUIvec2) { .x = 640, .y = 480 });
+
+    EASUI_SCREEN testScreen;
+    SET_NEW_EASUI_SCREEN(&testScreen, 67);
+
+    testWindow.SET_SCREEN(&testWindow, &testScreen);
+
+    EASUI_INIT();
 
 
-        EASUI_INIT();
+    // [RUN PART]
+    {
+
+        testLabel1.SET_TEXT(&testLabel1, "Hello");
+        testLabel1.PRINT(&testLabel1);
+        testLabel2.SET_TEXT(&testLabel2, "World");
+        testLabel2.PRINT(&testLabel2);
+
+        printf("\n\nscreen address: %p \nFrom window: %p\n\n", &testScreen, &testWindow.CURRENT_SCREEN);
+
+    }
 
 
-        // [RUN PART]
-        {
-
-                SET_NEW_EASUI_WINDOW(&TEST_WINDOW, 16, 300, 200);
-
-
-                printf("ADDRESS OF WINDOW ELEMENT_LIST = %p\n\n", TEST_WINDOW.ELEMENT_LIST);
-
-
-                SET_NEW_EASUI_LABEL(&TEST_LABEL, &TEST_WINDOW, 0, 0, 20, 10, 12, 1024);
-                SET_NEW_EASUI_LABEL(&TEST_LABEL_2, &TEST_WINDOW, 0, 0, 20, 10, 12, 1024);
-
-
-                printf("ADDRESS OF TEST_LABEL = %p\n", &TEST_LABEL);
-                printf("ADDRESS OF WINDOW ELEMENT_LIST[0] (SHOULD BE TEST_LABEL) = %p\n\n", (void*)TEST_WINDOW.ELEMENT_LIST[0]);
-
-                printf("ADDRESS OF TEST_LABEL_2 = %p\n", &TEST_LABEL_2);
-                printf("ADDRESS OF WINDOW ELEMENT_LIST[1] (SHOULD BE TEST_LABEL_2) = %p\n", TEST_WINDOW.ELEMENT_LIST[1]);
-
-        }
-
-
-        EASUI_END();
+    EASUI_END();
 
 
 
-        return 0;
+    return 0;
 
 }

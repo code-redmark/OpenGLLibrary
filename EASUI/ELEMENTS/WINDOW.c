@@ -1,87 +1,44 @@
-#include "../EASUI.h"
+ #include "../EASUI.h"
 
+int SET_WINDOW_SCREEN(EASUI_WINDOW* WINDOW, EASUI_SCREEN* SCREEN);
 
-
-
-int GET_LAST_ELEMENT_INDEX(EASUI_WINDOW* WINDOW);
-
-
-int ADD_ELEMENT(EASUI_WINDOW* WINDOW, void* ELEMENT);
-
-
-
-
-int SET_NEW_EASUI_WINDOW(EASUI_WINDOW* WINDOW, const unsigned short MAX_ELEMENT_COUNT, const unsigned int WIDTH, const unsigned int HEIGHT)
+int SET_NEW_EASUI_WINDOW(EASUI_WINDOW* WINDOW, uint16_t MAX_ELEMENT_COUNT, EASUIvec2 SIZE)
 {
-
         // [SET BASE VALUES]
         {
-
-                WINDOW->TYPE = EASUI_WINDOW_NUMBER;
+                WINDOW->TYPE = E_EASUI_WINDOW;
                 WINDOW->MAX_ELEMENT_COUNT = MAX_ELEMENT_COUNT;
-                WINDOW->WIDTH = WIDTH;
-                WINDOW->HEIGHT = HEIGHT;
-                WINDOW->ADD_ELEMENT = ADD_ELEMENT;
+                WINDOW->SIZE = SIZE;
 
+                WINDOW->ADD_ELEMENT = CONTAINER_ADD_ELEMENT;
+                WINDOW->LAST_ELEMENT_INDEX = CONTAINER_LAST_ELEMENT_INDEX;
+                WINDOW->SET_SCREEN = SET_WINDOW_SCREEN;;
         }
-
 
         // [ALLOCATE MEMORY FOR ELEMENT LIST]
         {
 
-                WINDOW->ELEMENT_LIST = MEMORY_ARENA_ALLOC(sizeof(void*) * MAX_ELEMENT_COUNT + 1);
+            WINDOW->CHILDREN_LIST = MEMORY_ARENA_ALLOC(sizeof(EASUI_ELEMENT*) * MAX_ELEMENT_COUNT + 1);
+
+            if (WINDOW->CHILDREN_LIST == NULL)
+            {
+                return EASUI_ERROR;
+            }
 
 
-                if (WINDOW->ELEMENT_LIST == NULL)
-                {
-
-                        return EASUI_ERROR;
-
-                }
-
-
-                WINDOW->ELEMENT_LIST[0] = NULL;
+            WINDOW->CHILDREN_LIST[0] = NULL;
 
         }
-
 
         return EASUI_OK;
+}
 
+int SET_WINDOW_SCREEN(EASUI_WINDOW* WINDOW, EASUI_SCREEN* SCREEN) 
+{ 
+    WINDOW->CURRENT_SCREEN = SCREEN;  
+    if (!WINDOW->CURRENT_SCREEN) return EASUI_ERROR;
+
+    return EASUI_OK;
 }
 
 
-int ADD_ELEMENT(EASUI_WINDOW* WINDOW, void* ELEMENT)
-{
-
-        const int LAST_ELEMENT_INDEX = GET_LAST_ELEMENT_INDEX(WINDOW);
-
-
-        if (LAST_ELEMENT_INDEX + 2 >= WINDOW->MAX_ELEMENT_COUNT)
-        {
-
-                return EASUI_ERROR;
-
-        }
-
-
-        WINDOW->ELEMENT_LIST[LAST_ELEMENT_INDEX + 1] = ELEMENT;
-        WINDOW->ELEMENT_LIST[LAST_ELEMENT_INDEX + 2] = NULL;
-
-
-        return 0;
-
-}
-
-
-int GET_LAST_ELEMENT_INDEX(EASUI_WINDOW* WINDOW)
-{
-
-        int INDEX = 0;
-
-
-        for (; WINDOW->ELEMENT_LIST[INDEX] != NULL; INDEX ++);
-
-
-        return INDEX - 1;
-
-}

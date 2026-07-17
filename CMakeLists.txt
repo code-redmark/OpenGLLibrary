@@ -21,6 +21,7 @@ file(GLOB_RECURSE C_CODE "EASUI/*.c" "EASUI/*.cpp")
 
 add_executable(EASUI 
     ${C_CODE}
+    "TEST.c"
 )
 
 # -- GLFW setup
