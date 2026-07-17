@@ -1,4 +1,5 @@
 #include "../EASUI.h"
+#include <SDL3/SDL_init.h>
 
 
 
@@ -76,5 +77,8 @@ void EASUI_END()
 {
 
         FREE_MEMORY_ARENA();
+
+
+        SDL_Quit();
 
 }
