@@ -191,14 +191,20 @@ void* WINDOW_MANAGER_MAIN(void* ARG)
                 for (unsigned short INDEX = 0; INDEX <= LAST_WINDOW_INDEX; INDEX++)
                 {
 
-                        if (WINDOW_LIST[INDEX]->STATUS == EASUI_WINDOW_RUNNNING)
+                        EASUI_WINDOW* CURRENT_WINDOW = WINDOW_LIST[INDEX];
+
+
+                        if (CURRENT_WINDOW->STATUS == EASUI_WINDOW_RUNNNING)
                         {
+
+                                CURRENT_WINDOW->UPDATE_CONTEXT_SIZE(CURRENT_WINDOW);
+
 
                                 glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
                                 glClear(GL_COLOR_BUFFER_BIT);
 
 
-                                SDL_GL_SwapWindow(WINDOW_LIST[INDEX]->SDL_WINDOW);
+                                SDL_GL_SwapWindow(CURRENT_WINDOW->SDL_WINDOW);
 
                         }
 
