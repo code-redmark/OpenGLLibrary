@@ -6,6 +6,7 @@
 #include "DEPENDENCIES/COMMON/STRINGS.h"
 #include "DEPENDENCIES/GLAD/include/glad/glad.h"
 #include <SDL3/SDL.h>
+#include <pthread.h>
 
 
 #define EASUI_ERROR 0
@@ -33,6 +34,14 @@ enum EASUI_WINDOW_STATUS_NUMBERS
 
 };
 
+enum EASUI_WINDOW_EVENT_NUMBERS
+{
+
+        EASUI_NO_WINDOW_EVENT,
+        EASUI_CLOSE_WINDOW_EVENT,
+
+};
+
 
 typedef struct EASUI_SCREEN EASUI_SCREEN;
 typedef struct EASUI_WINDOW EASUI_WINDOW;
@@ -44,16 +53,22 @@ typedef struct EASUI_WINDOW EASUI_WINDOW;
 int EASUI_INIT(const unsigned short MAX_WINDOW_COUNT);
 
 
-void EASUI_END();
+int EASUI_WAIT_AND_END();
 
 
 int EASUI__SETUP_WINDOW_LIST(const unsigned short MAX_WINDOW_COUNT);
 
 
+int EASUI__WINDOW_MANAGER_START();
+
+
+int EASUI__WINDOW_MANAGER_WAIT_AND_END();
+
+
 int EASUI__ADD_WINDOW_TO_WINDOW_LIST(EASUI_WINDOW* WINDOW);
 
 
-int EASUI__WINDOW_MANAGER_START();
+int EASUI__POLL_EVENTS();
 
 
 int ADD__ELEMENT__TO__FRAMED_ELEMENT(void* FRAMED_ELEMENT, void* ELEMENT);

@@ -6,7 +6,7 @@
 
                 "args": [
                         "-c",
-                        "cd \"$ZED_WORKTREE_ROOT\" && gcc $(find . -type f -name \"*.c\" -not -path \"./EASUI/DEPENDENCIES/GLFW/*\") -o NOOUBYS_OUTPUT/PROGRAM $(pkg-config --cflags --libs sdl3) -lGL -lX11 -lXrandr -lm && ./NOOUBYS_OUTPUT/PROGRAM"
+                        "cd \"$ZED_WORKTREE_ROOT\" && gcc $(find . -type f -name \"*.c\" -not -path \"./EASUI/DEPENDENCIES/GLFW/*\") -o NOOUBYS_OUTPUT/PROGRAM -lSDL3 -lGL -lX11 -lXrandr -lm && ./NOOUBYS_OUTPUT/PROGRAM" //$(pkg-config --cflags --libs sdl3)
 ,
                 ]
         },

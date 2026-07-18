@@ -20,6 +20,7 @@ int EASUI_INIT(const unsigned short MAX_WINDOW_COUNT)
         EASUI__SETUP_WINDOW_LIST(MAX_WINDOW_COUNT);
 
 
+        // !-- TODO : FIX POLL EVENTS NOT WORKING ISSUE --!
         if (!SDL_Init(SDL_INIT_VIDEO))
         {
 
@@ -30,14 +31,14 @@ int EASUI_INIT(const unsigned short MAX_WINDOW_COUNT)
 
         }
 
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
         SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
         SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
 
-        int EASUI__WINDOW_MANAGER_START();
+        EASUI__WINDOW_MANAGER_START();
 
 
         return EASUI_OK;
@@ -73,12 +74,18 @@ int ADD__ELEMENT__TO__FRAMED_ELEMENT(void* FRAMED_ELEMENT, void* ELEMENT)
 }
 
 
-void EASUI_END()
+int EASUI_WAIT_AND_END()
 {
+
+        EASUI__WINDOW_MANAGER_WAIT_AND_END();
+
 
         FREE_MEMORY_ARENA();
 
 
         SDL_Quit();
+
+
+        return EASUI_OK;
 
 }

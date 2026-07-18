@@ -118,7 +118,7 @@ int START(EASUI_WINDOW* WINDOW)
         // [CREATE WINDOW AND CONTEXT]
         {
 
-                WINDOW->SDL_WINDOW = SDL_CreateWindow(WINDOW->TITLE, WINDOW->WIDTH, WINDOW->HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
+                WINDOW->SDL_WINDOW = SDL_CreateWindow(WINDOW->TITLE, WINDOW->WIDTH, WINDOW->HEIGHT, SDL_WINDOW_OPENGL);
 
 
                 if (!WINDOW->SDL_WINDOW)
@@ -130,6 +130,9 @@ int START(EASUI_WINDOW* WINDOW)
                         return EASUI_ERROR;
 
                 }
+
+
+                SDL_ShowWindow(WINDOW->SDL_WINDOW);
 
 
                 WINDOW->SDL_CONTEXT = SDL_GL_CreateContext(WINDOW->SDL_WINDOW);
@@ -151,7 +154,24 @@ int START(EASUI_WINDOW* WINDOW)
                 SDL_GL_MakeCurrent(WINDOW->SDL_WINDOW, WINDOW->SDL_CONTEXT);
 
 
+                if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
+                {
+
+                        SDL_DestroyWindow(WINDOW->SDL_WINDOW);
+
+
+                        LOG_EASUI_ERROR("FAILED TO START WINDOW : FAILED TO LOAD GLAD");
+
+
+                        return EASUI_ERROR;
+
+                }
+
+
                 SDL_GL_SetSwapInterval(1);
+
+
+                SDL_GL_SwapWindow(WINDOW->SDL_WINDOW);
 
 
                 WINDOW->STATUS = EASUI_WINDOW_RUNNNING;
