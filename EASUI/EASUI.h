@@ -55,13 +55,10 @@ typedef struct EASUI_WINDOW EASUI_WINDOW;
 // ================================================== [FUNCTIONS] =================================================
 //
 
-int EASUI_INIT(const unsigned short MAX_WINDOW_COUNT);
+int EASUI__INIT(const unsigned short MAX_WINDOW_COUNT);
 
 
 int EASUI__RUN();
-
-
-int EASUI_WAIT_AND_END();
 
 
 int EASUI__WINDOW_MANAGER__INIT(const unsigned short MAX_WINDOW_COUNT);

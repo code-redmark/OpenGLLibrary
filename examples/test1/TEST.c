@@ -6,7 +6,7 @@
 int main()
 {
 
-        EASUI_INIT(5);
+        EASUI__INIT(5);
 
 
         EASUI_WINDOW WINDOW_1, WINDOW_2, WINDOW_3, WINDOW_4, WINDOW_5;

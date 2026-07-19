@@ -4,7 +4,7 @@
 
 
 
-int EASUI_INIT(const unsigned short MAX_WINDOW_COUNT)
+int EASUI__INIT(const unsigned short MAX_WINDOW_COUNT)
 {
 
         // [SETUP SDL]
