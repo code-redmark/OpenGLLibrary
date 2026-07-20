@@ -1,9 +1,13 @@
 #include "../../EASUI.h"
+#include <SDL3/SDL_video.h>
 
 
 
 EASUI_WINDOW** WINDOW_LIST;
 EASUI_WINDOW* ACTIVE_WINDOW;
+
+
+SDL_GLContext EASUI__SDL_CONTEXT = EASUI_NONE;
 
 
 unsigned short LAST_WINDOW_INDEX;
@@ -43,7 +47,7 @@ int EASUI__WINDOW_MANAGER__INIT(const unsigned short WINDOW_COUNT)
 
                 MAX_WINDOW_COUNT = WINDOW_COUNT;
                 LAST_WINDOW_INDEX = 0;
-                
+
                 SET_FRAMETIME();
 
         }
@@ -97,37 +101,45 @@ int EASUI__WINDOW_MANAGER__RUN()
                 EASUI_WINDOW* CURRENT_WINDOW = GET_FOCUSED_WINDOW();
 
 
+
                 if (CURRENT_WINDOW == NULL)
                 {
-                    continue;
+
+                        continue;
+
                 }
 
 
                 if (WINDOW_EVENT == EASUI_CLOSE_WINDOW_EVENT)
                 {
 
-                    SDL_GL_DestroyContext(CURRENT_WINDOW->SDL_CONTEXT);
-                    SDL_DestroyWindow(CURRENT_WINDOW->SDL_WINDOW);
+                        SDL_DestroyWindow(CURRENT_WINDOW->SDL_WINDOW);
 
-                    CURRENT_WINDOW->STATUS = EASUI_WINDOW_CLOSED;
+
+                        CURRENT_WINDOW->STATUS = EASUI_WINDOW_CLOSED;
 
                 }
 
-                
+
                 // ==============! TEMPORARY !==============
                 for (unsigned short INDEX = 0; INDEX <= LAST_WINDOW_INDEX; INDEX++)
                 {
-                        
+
                         EASUI_WINDOW* WIN = WINDOW_LIST[INDEX];
-                        SDL_GL_MakeCurrent(WIN, WIN->SDL_CONTEXT);
+
+
+                        SDL_GL_MakeCurrent(WIN->SDL_WINDOW, EASUI__SDL_CONTEXT);
+
 
                         if (WIN->STATUS == EASUI_WINDOW_RUNNNING)
                         {
 
                                 WIN->UPDATE_CONTEXT_SIZE(WIN);
 
+
                                 glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
                                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
                                 SDL_GL_SwapWindow(WIN->SDL_WINDOW);
 
@@ -141,7 +153,10 @@ int EASUI__WINDOW_MANAGER__RUN()
         }
 
 
-        return EASUI_ERROR;
+        SDL_GL_DestroyContext(EASUI__SDL_CONTEXT);
+
+
+        return EASUI_OK;
 
 }
 
@@ -337,9 +352,9 @@ void SET_FRAMETIME()
 
         SET_FRAMETIME:
         {
-                
+
                 FRAMETIME_MILLISECONDS = 1000 / REFRESH_RATE;
-                
+
         }
-        
+
 }

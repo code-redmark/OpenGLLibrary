@@ -1,4 +1,5 @@
 #include "../../EASUI.h"
+#include <SDL3/SDL_video.h>
 
 
 
@@ -169,43 +170,56 @@ int START(EASUI_WINDOW* WINDOW)
                 }
 
 
-                // [CREATE OPENGL CONTEXT]
+                // [CREATE OPENGL CONTEXT IF NONE]
                 {
 
-                        WINDOW->SDL_CONTEXT = SDL_GL_CreateContext(WINDOW->SDL_WINDOW);
-
-
-                        if (!WINDOW->SDL_CONTEXT)
+                        if (EASUI__SDL_CONTEXT == EASUI_NONE)
                         {
 
-                                SDL_DestroyWindow(WINDOW->SDL_WINDOW);
+                                EASUI__SDL_CONTEXT = SDL_GL_CreateContext(WINDOW->SDL_WINDOW);
 
 
-                                LOG_EASUI_ERROR("FAILED TO START WINDOW : FAILED TO CREATE SDL CONTEXT");
+
+                                if (!EASUI__SDL_CONTEXT)
+                                {
+
+                                        SDL_DestroyWindow(WINDOW->SDL_WINDOW);
 
 
-                                return EASUI_ERROR;
+                                        LOG_EASUI_ERROR("FAILED TO START WINDOW : FAILED TO CREATE SDL CONTEXT");
+
+
+                                        return EASUI_ERROR;
+
+
+                                }
+
+
+                                // [LOAD GLAD]
+                                {
+
+                                        if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
+                                        {
+
+                                                SDL_DestroyWindow(WINDOW->SDL_WINDOW);
+
+
+                                                SDL_GL_DestroyContext(EASUI__SDL_CONTEXT);
+
+
+                                                LOG_EASUI_ERROR("FAILED TO START WINDOW : FAILED TO LOAD GLAD");
+
+
+                                                return EASUI_ERROR;
+
+                                        }
+
+                                }
+
                         }
 
 
-                        SDL_GL_MakeCurrent(WINDOW->SDL_WINDOW, WINDOW->SDL_CONTEXT);
-
-                }
-
-
-                if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
-                {
-
-                        SDL_DestroyWindow(WINDOW->SDL_WINDOW);
-
-
-                        SDL_GL_DestroyContext(WINDOW->SDL_CONTEXT);
-
-
-                        LOG_EASUI_ERROR("FAILED TO START WINDOW : FAILED TO LOAD GLAD");
-
-
-                        return EASUI_ERROR;
+                        SDL_GL_MakeCurrent(WINDOW->SDL_WINDOW, EASUI__SDL_CONTEXT);
 
                 }
 
@@ -291,7 +305,7 @@ void UPDATE_CONTEXT_SIZE(EASUI_WINDOW* WINDOW)
         WINDOW->HEIGHT = NEW_WINDOW_HEIGHT;
 
 
-        SDL_GL_SwapWindow(WINDOW->SDL_WINDOW);
+        //SDL_GL_SwapWindow(WINDOW->SDL_WINDOW);
         glViewport(0, 0, NEW_WINDOW_WIDTH, NEW_WINDOW_HEIGHT);
 
 }

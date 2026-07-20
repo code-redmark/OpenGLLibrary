@@ -18,6 +18,8 @@
 #define EASUI_ERROR 0
 #define EASUI_OK 1
 
+
+
 enum EASUI_ELEMENT_TYPE_NUMBERS
 {
 
@@ -49,6 +51,9 @@ enum EASUI_WINDOW_EVENT_NUMBERS
 
 typedef struct EASUI_SCREEN EASUI_SCREEN;
 typedef struct EASUI_WINDOW EASUI_WINDOW;
+
+
+extern SDL_GLContext EASUI__SDL_CONTEXT;
 
 
 // ================================================== [FUNCTIONS] =================================================
@@ -117,7 +122,6 @@ void LOG_EASUI_CRITICAL_ERROR(const char* MESSAGE);
                 char TYPE;
                 char STATUS;
                 SDL_Window* SDL_WINDOW;
-                SDL_GLContext SDL_CONTEXT;
                 EASUI_SCREEN* ACTIVE_SCREEN;
                 EASUI_SCREEN DEFAULT_SCREEN;
                 unsigned int WIDTH, HEIGHT;
