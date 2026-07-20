@@ -12,7 +12,7 @@ SDL_GLContext EASUI__SDL_CONTEXT = EASUI_NONE;
 
 unsigned short LAST_WINDOW_INDEX;
 unsigned short MAX_WINDOW_COUNT;
-unsigned short FRAMETIME_MILLISECONDS;
+unsigned short FRAMETIME_MILLISECONDS = 0;
 
 
 
@@ -47,6 +47,7 @@ int EASUI__WINDOW_MANAGER__INIT(const unsigned short WINDOW_COUNT)
 
                 MAX_WINDOW_COUNT = WINDOW_COUNT;
                 LAST_WINDOW_INDEX = 0;
+
 
                 SET_FRAMETIME();
 

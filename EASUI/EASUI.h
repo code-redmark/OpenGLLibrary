@@ -54,6 +54,7 @@ typedef struct EASUI_WINDOW EASUI_WINDOW;
 
 
 extern SDL_GLContext EASUI__SDL_CONTEXT;
+extern unsigned short FRAMETIME_MILLISECONDS;
 
 
 // ================================================== [FUNCTIONS] =================================================
