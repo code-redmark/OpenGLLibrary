@@ -26,7 +26,8 @@ enum EASUI_ELEMENT_TYPE_NUMBERS
         EASUI_WINDOW_NUMBER,
         EASUI_SCREEN_NUMBER,
         EASUI_TEXTBOX_NUMBER,
-        EASUI_LABEL_NUMBER
+        EASUI_LABEL_NUMBER,
+        EASUI_FRAME_NUMBER
 
 };
 
@@ -155,11 +156,28 @@ void LOG_EASUI_CRITICAL_ERROR(const char* MESSAGE);
 
 
         int SET_NEW_EASUI_WINDOW(EASUI_WINDOW* WINDOW, const char* TITLE, const unsigned short MAX_ELEMENT_COUNT, const EASUIvec2 SIZE, const int RESIZABLE);
-        int SET_EASUI_WINDOW_BG_COLOR(EASUI_WINDOW* WINDOW, const EASUIvec3 BG_COLOR);
 
 // =============================================================================================================
 
 
+// =================================================== [FRAME] =================================================
+
+        typedef struct EASUI_FRAME EASUI_FRAME;
+
+        struct EASUI_FRAME 
+        {
+                
+                void** ELEMENT_LIST;
+                EASUIvec2 POSITION;
+                EASUIvec2 SIZE;
+                EASUIvec3 COLOR;
+                unsigned int ALPHA;
+                
+        };
+
+        int 
+
+// ===============================================================================================================
 
 // =================================================== [LABEL] =================================================
 

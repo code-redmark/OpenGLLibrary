@@ -17,9 +17,10 @@ int main()
         SET_NEW_EASUI_WINDOW(&WINDOW_2, "Window 2", 8, (EASUIvec2){.x = 800, .y = 600}, TRUE);
         SET_NEW_EASUI_WINDOW(&WINDOW_3, "Window 3", 8, (EASUIvec2){.x = 600, .y = 800}, TRUE);
 
-        SET_EASUI_WINDOW_BG_COLOR(&WINDOW_1, (EASUIvec3){.x = 1.0f, .y = 0.0f, .z = 0.0f});
-        SET_EASUI_WINDOW_BG_COLOR(&WINDOW_2, (EASUIvec3){.x = 0.0f, .y = 1.0f, .z = 0.0f});
-        SET_EASUI_WINDOW_BG_COLOR(&WINDOW_3, (EASUIvec3){.x = 0.0f, .y = 0.0f, .z = 1.0f});
+        WINDOW_1.BG_COLOR = (EASUIvec3){ .x = 1.0f, .y = 0.0f, .z = 0.0f };
+        WINDOW_2.BG_COLOR = (EASUIvec3){ .x = 0.0f, .y = 1.0f, .z = 0.0f };
+        WINDOW_3.BG_COLOR = (EASUIvec3){ .x = 0.0f, .y = 0.0f, .z = 1.0f };
+
         
         //SET_NEW_EASUI_LABEL(&LABEL_1, &WINDOW_2, 0, 0, 30, 30, 9, 1024);
 
